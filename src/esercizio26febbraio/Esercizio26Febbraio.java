@@ -2,10 +2,23 @@
 package esercizio26febbraio;
 import java.util.Scanner;
 import java.util.Random;
+import java.lang.Math;
 
 public class Esercizio26Febbraio 
 {
     
+    
+    
+    
+    /**funzione maggiore
+     * 
+     * calcola l'oggetto maggiore di un array
+     * confrontandolo con il maggiore trovato
+     * in precedenza
+     * 
+     * @param vettore
+     * @param numeri 
+     */
     static void  maggiore(int vettore[], int numeri)
     {
         int max = Integer.MIN_VALUE;
@@ -18,6 +31,16 @@ public class Esercizio26Febbraio
     }
     
     
+    
+    /**funzione minore
+     * 
+     * calcola l'oggetto minore in un array
+     * confrontandolo con l'oggetto ritenuto
+     * minore in precedenza
+     * 
+     * @param vettore
+     * @param numeri 
+     */
     static void minore(int vettore[], int numeri)
     {
         int min = Integer.MAX_VALUE;
@@ -31,6 +54,17 @@ public class Esercizio26Febbraio
         System.out.print("Il minore è "+min);
     }
 
+    
+    
+    /**funzione maxinput
+     * 
+     * determina quanti oggetti sono maggiori di un 
+     * determinato input dell'utente, tramite una
+     * variabile di controllo
+     * 
+     * @param vettore
+     * @param numeri 
+     */
     static void maxtinput(int vettore[], int numeri)
     {
         Scanner scannervar = new Scanner(System.in);
@@ -47,7 +81,14 @@ public class Esercizio26Febbraio
     
     
     
-    
+    /**funzione eliminavett
+     * 
+     * elimina un dato valore da un vettore, scalando
+     * tutti i successivi per rimpiazzarlo
+     * 
+     * @param vettore
+     * @param numeri 
+     */
     static void eliminavett(int vettore[], int numeri)
     {
         Scanner scannervar = new Scanner(System.in);
@@ -58,8 +99,9 @@ public class Esercizio26Febbraio
         {
             if(vettore[i]==eliminante)
             {
-                for(int j=i; j<numeri-i; j++)
+                for(int j=i; j<numeri; j++)
                 {
+                    vettore[j] = 0;
                     vettore[j] = vettore[j+1];
                 }
             }
@@ -73,6 +115,14 @@ public class Esercizio26Febbraio
     
     
     
+    /**funzione aggiungivett
+     * 
+     * aggiunge un determinato valore ad un vettore, spostando 
+     * tutti i valori successivi per fare spazio
+     * 
+     * @param vettore
+     * @param numeri 
+     */
     static void aggiungivett(int vettore[], int numeri)
     {
         Scanner scannervar = new Scanner(System.in);
@@ -83,17 +133,86 @@ public class Esercizio26Febbraio
         posagg = scannervar.nextInt();
         appoggio1 = vettore[posagg];
         vettore[posagg]=aggiungente;
-        for(int i=posagg+1; i<numeri; i++)
+        for(int i=posagg+1; i<numeri+1; i++)
         {
             appoggio2= vettore[i];
             vettore[i] = appoggio1;
             appoggio1 = vettore[i+1];
-            vettore[i+1]=appoggio2;
+            vettore[(i+1)] = appoggio2;
+            System.out.println();
         }
-        for(int i=0; i<numeri; i++)
+        for(int i=0; i<numeri+1; i++)
         {
             System.out.print(vettore[i]);
         }
+    }
+    
+    
+    
+    /**funzione percentpositivi
+     * 
+     * calcola la percentuale di numeri >=0 sul
+     * totale di oggetti del vettore
+     * 
+     * @param vettore
+     * @param numeri 
+     */
+    static void percentpositivi(int vettore[], int numeri)
+    {
+        double percentuale=0;
+        for(int i=0; i<numeri; i++)
+        {
+            if(vettore[i]>=0)
+            {
+                percentuale ++;
+            }
+        }
+        percentuale = ((percentuale/numeri)*100);
+        System.out.println("la percentuale di positivi è "+percentuale+"%");
+    }
+    
+    
+    
+    /**funzione quantiprimi
+     * 
+     * determina se e quanti oggetti sono primi all'interno di un
+     * array
+     * 
+     * @param vettore
+     * @param numeri 
+     */
+    static void quantiprimi(int vettore[], int numeri)
+    {
+        double controllato=0;
+        int controllore=1, fallimento=0, nprimi=0;
+        for(int i=0; i<numeri; i++)
+        {               
+            if(vettore[i]!=1&&vettore[i]!=0&&vettore[i]!=2) //0, 1 e 2 sono dei bastardi, li escludo subito
+            {
+                controllato = ((int)Math.sqrt(vettore[i])+1);//calcolo radice quadrata del valore in esame         
+                for(int j=0; j<controllato; j++) //è inutile controllare un valore più alto della rdqdt.
+                {
+                    controllore++; //controllore parte sempre da due
+                    if(vettore[i]%controllore==0&&controllore!=vettore[i]) //controlla se il numero è divisibile per 2 o più (fino alla propria radice quadrata)
+                    {
+                        j=((int)controllato+1);
+                        fallimento=1;
+                    }
+                }
+                controllore=1;//reset variabili di controllo
+                if(fallimento==0)
+                {
+                    nprimi ++;   
+                }
+                fallimento=0;//reset variabili di controllo
+            }
+            if(vettore[i]==0||vettore[i]==1||vettore[i]==2)
+            {
+                nprimi++;
+            }
+        }
+        System.out.println("i numeri primi sono " +nprimi);
+        
     }
     
     
@@ -126,9 +245,9 @@ public class Esercizio26Febbraio
             break;
             case "5": aggiungivett(vettore, numeri);
             break;
-            case "6": percentpositivi();
+            case "6": percentpositivi(vettore, numeri);
             break;
-            case "7": quantitaprimi();
+            case "7": quantiprimi(vettore,numeri);
             break;
         }
     }
